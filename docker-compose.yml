@@ -1,0 +1,36 @@
+services:
+  db_source_1:
+    image: postgres:15
+    container_name: db_source_1
+    environment:
+      POSTGRES_USER: user1
+      POSTGRES_PASSWORD: password1
+      POSTGRES_DB: sourceDB1
+    volumes:
+      - ./DB/init-script/source_1/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    
+  db_source_2:
+    image: postgres:15
+    container_name: db_source_2
+    environment:
+      POSTGRES_USER: user1
+      POSTGRES_PASSWORD: password1
+      POSTGRES_DB: sourceDB2
+    volumes:
+      - ./DB/init-script/source_2/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
+
+  db_consumer_1:
+    image: postgres:15
+    container_name: db_consumer_1
+    environment:
+      POSTGRES_USER: user1
+      POSTGRES_PASSWORD: password1
+      POSTGRES_DB: consumerDB1
+    volumes:
+      - ./DB/init-script/consumer_1/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5434:5432"
