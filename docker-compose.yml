@@ -66,7 +66,7 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka_storage:9092
 
   data-produser-py:
-    image: python:3.13-slim
+    image: python_for_kafka:1.0.0
     container_name: data-produser-py
     working_dir: /app
     depends_on:
@@ -76,13 +76,10 @@ services:
     volumes:
       - ./producer:/app
     command: >
-      bash -c "apt-get update &&
-           apt-get install -y --no-install-recommends gcc librdkafka-dev libssl-dev &&
-           pip install --no-cache-dir -r requirements.txt &&
-           exec python producer_1.py"
+      bash -c "exec python producer_1.py"
   
   data-consumer-py:
-    image: python:3.13-slim
+    image: python_for_kafka:1.0.0
     container_name: data-consumer-py
     working_dir: /app
     depends_on:
@@ -93,7 +90,4 @@ services:
     volumes:
       - ./consumer:/app
     command: >
-      bash -c "apt-get update &&
-           apt-get install -y --no-install-recommends gcc librdkafka-dev libssl-dev &&
-           pip install --no-cache-dir -r requirements.txt &&
-           exec python consumer_1.py"
+      bash -c "exec python consumer_1.py"
